@@ -9,7 +9,12 @@ namespace LeetCode
     {
         static void Main(string[] args)
         {
-            var res = RemoveElement(new int[] {3,2,2,3},3);
+            var res = PlusOne(new int[] { 4, 3, 2, 1});
+            foreach (var a in res)
+            {
+                Console.WriteLine(a);
+            }
+
             Console.WriteLine(res);
             Console.ReadKey();
         }
@@ -154,6 +159,65 @@ namespace LeetCode
                 }
             }
             return i;
+        }
+
+        // 搜索插入位置（二分法）
+        public static int SearchInsert(int[] nums, int target)
+        {
+            if (nums.Length==0 || target<= nums[0])
+                return 0;
+            if (target > nums[nums.Length - 1])
+                return nums.Length;
+
+            int left = 0;
+            int right = nums.Length - 1;
+
+            while (left <= right)
+            {
+                int mid = (right + left) / 2;
+                if (target == nums[mid])
+                    return mid;
+                if (target < nums[mid])
+                    right = mid - 1;
+                if (target > nums[mid])
+                    left = mid + 1;
+            }
+
+            return left;
+        }
+
+        // 最后一个单词的长度
+        public static int LengthOfLastWord(string s)
+        {
+            s = s.TrimEnd();
+            string[] sArray = s.Split(' ');
+            if (sArray.Length == 0)
+                return 0;
+            else
+            {
+                char[] cArray = sArray[sArray.Length - 1].ToCharArray();
+                return cArray.Length;
+            }
+        }
+
+        // 加一
+        public static int[] PlusOne(int[] digits)
+        {
+
+            //Array.ConvertAll<int, string>(digits, delegate (int input) { return input.ToString(); });
+            //string[] sArray=Array.ConvertAll<int, string>(digits, input=>input.ToString());
+            for (int i = digits.Length - 1; i > 0; i--)
+            {
+                digits[i]++;
+                digits[i] = digits[i] % 10;
+                if (digits[i] != 0)
+                    return digits;
+
+            }
+
+            digits = new int[digits.Length + 1];
+            digits[0] = 1;
+            return digits;
         }
     }
 }
